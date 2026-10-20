@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b111a">
+<title>Suécia NC | Central de Produtos</title>
+<link rel="icon" type="image/svg+xml" href="diagram.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Central Suécia">
+      <span class="flag">🇸🇪</span>
+      <span>
+        <strong>SUÉCIA NC</strong>
+        <small> CENTRAL DE PRODUTOS</small>
+      </span>
+    </a>
+    <div class="header-right">
+      <span id="memberBadge" class="member-badge">Visitante</span>
+      <button id="adminButton" class="button button-outline" type="button">
+        Administração
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- TELA DE BOAS-VINDAS -->
+    <section id="welcomeScreen" class="welcome-screen">
+      <div class="welcome-card">
+        <div class="welcome-flag">🇸🇪</div>
+        <p class="eyebrow">CENTRAL OFICIAL • NOVA CAPITAL</p>
+        <h1>Bem-vindo à <span>Suécia NC</span></h1>
+        <p class="muted">
+          Informe seus dados do jogo para acessar a central de consulta.
+        </p>
+
+        <form id="loginForm" class="form-stack">
+          <label for="memberName">Nome no jogo</label>
+          <input id="memberName" name="memberName"
+                 placeholder="Digite seu nome no jogo"
+                 maxlength="60" autocomplete="nickname" required>
+
+          <label for="memberId">ID no jogo</label>
+          <input id="memberId" name="memberId"
+                 placeholder="Digite seu ID"
+                 maxlength="20" inputmode="numeric" required>
+
+          <button class="button button-primary button-full" type="submit">
+            Entrar na Central
+          </button>
+          <p id="loginMessage" class="message" aria-live="polite"></p>
+        </form>
+        <p class="small muted">
+        
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <section id="mainScreen" class="hidden">
+      <div class="welcome-banner">
+        <div>
+          <p class="eyebrow">CENTRAL DE CONSULTA</p>
+          <h1>Olá, <span id="currentMemberName">membro</span>!</h1>
+          <p class="muted">Consulte os valores e faça seus cálculos aqui.</p>
+        </div>
+        <button id="logoutButton" class="button button-outline" type="button">
+          Sair
+        </button>
+      </div>
+
+      <nav class="tabs" aria-label="Seções da Central">
+        <button class="tab active" data-tab="partnership" type="button">
+          🤝 Parceria
+        </button>
+        <button class="tab" data-tab="normal" type="button">
+          📦 Normal
+        </button>
+        <button class="tab" data-tab="laundering" type="button">
+          🧮 Dinheiro Sujo
+        </button>
+      </nav>
+
+      <!-- ABA PARCERIA -->
+      <section id="partnershipTab" class="tab-content">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">CATÁLOGO</p>
+            <h2>Preços de parceria</h2>
+            <p class="muted">Valores especiais para parceiros.</p>
+          </div>
+          <span class="count-label" id="partnershipCount">0 produtos</span>
+        </div>
+        <div id="partnershipProducts" class="product-grid"></div>
+      </section>
+
+      <!-- ABA NORMAL -->
+      <section id="normalTab" class="tab-content hidden">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">CATÁLOGO</p>
+            <h2>Preços normais</h2>
+            <p class="muted">Valores fora da parceria.</p>
+          </div>
+          <span class="count-label" id="normalCount">0 produtos</span>
+        </div>
+        <div id="normalProducts" class="product-grid"></div>
+      </section>
+
+      <!-- ABA DINHEIRO SUJO -->
+      <section id="launderingTab" class="tab-content hidden">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">CALCULADORA</p>
+            <h2>Dinheiro Sujo</h2>
+            <p class="muted">Calcule a taxa e o valor líquido.</p>
+          </div>
+        </div>
+
+        <div class="calculator-card">
+          <label for="grossAmount">Valor bruto</label>
+          <input id="grossAmount" type="number" min="0" step="any"
+                 placeholder="Digite o valor">
+
+          <div class="range-heading">
+            <label for="feeRate">Taxa de desconto</label>
+            <strong id="feeRateLabel">20%</strong>
+          </div>
+          <input id="feeRate" type="range" min="20" max="40" step="1" value="20">
+
+          <div class="range-labels">
+            <span>20%</span><span>30%</span><span>40%</span>
+          </div>
+
+          <div class="result-grid">
+            <div class="result-card">
+              <span>Taxa descontada</span>
+              <strong id="feeAmount">0</strong>
+            </div>
+            <div class="result-card result-highlight">
+              <span>Valor líquido</span>
+              <strong id="netAmount">0</strong>
+            </div>
+          </div>
+          <button id="copyCalculation" class="button button-outline button-full"
+                  type="button">Copiar resultado</button>
+          <p id="calculatorMessage" class="message" aria-live="polite"></p>
+        </div>
+      </section>
+    </section>
+
+    <!-- TELA DE LOGIN ADMINISTRATIVO -->
+    <section id="adminLoginScreen" class="welcome-screen hidden">
+      <div class="welcome-card">
+        <div class="welcome-flag">🔐</div>
+        <p class="eyebrow">ÁREA RESTRITA</p>
+        <h1>Administração</h1>
+        <p class="muted">
+          Digite a senha para acessar o painel administrativo.
+        </p>
+
+        <form id="adminLoginForm" class="form-stack">
+          <label for="adminPassword">Senha administrativa</label>
+          <input id="adminPassword" type="password"
+                 placeholder="Digite a senha"
+                 autocomplete="current-password" required>
+
+          <button class="button button-primary button-full" type="submit">
+            Entrar na Administração
+          </button>
+          <button id="cancelAdminLoginButton" class="button button-outline button-full"
+                  type="button">
+            Cancelar
+          </button>
+          <p id="adminLoginMessage" class="message" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- PAINEL ADMINISTRATIVO -->
+    <section id="adminScreen" class="hidden">
+      <div class="welcome-banner">
+        <div>
+          <p class="eyebrow">ÁREA RESTRITA</p>
+          <h1>Painel administrativo</h1>
+          <p class="muted">Gerencie o catálogo de produtos.</p>
+        </div>
+        <button id="closeAdminButton" class="button button-outline" type="button">
+          Voltar à Central
+        </button>
+      </div>
+
+      <div class="admin-notice">
+        <strong>Atenção:</strong> nesta versão, a senha e os dados ficam no
+        navegador. O painel não é seguro para publicação pública até conectarmos
+        autenticação e banco de dados no servidor.
+      </div>
+
+      <div class="admin-grid">
+        <div class="panel-card">
+          <h2 id="productFormTitle">Adicionar produto</h2>
+          <form id="productForm" class="form-stack">
+            <input id="editProductId" type="hidden">
+
+            <label for="productName">Nome do produto</label>
+            <input id="productName" maxlength="80"
+                   placeholder="Ex.: C4" required>
+
+            <label for="partnershipPrice">Preço de parceria</label>
+            <input id="partnershipPrice" type="number" min="0" step="any"
+                   placeholder="Ex.: 14000" required>
+
+            <label for="normalPrice">Preço normal</label>
+            <input id="normalPrice" type="number" min="0" step="any"
+                   placeholder="Ex.: 18000" required>
+
+            <button class="button button-primary button-full" type="submit">
+              Salvar produto
+            </button>
+            <button id="cancelEditButton" class="button button-outline hidden"
+                    type="button">Cancelar edição</button>
+            <p id="adminMessage" class="message" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <div class="panel-card">
+          <h2>Produtos cadastrados</h2>
+          <p class="muted">Edite os valores ou remova um produto.</p>
+          <div id="adminProductList" class="admin-product-list"></div>
+        </div>
+      </div>
+
+      <div class="panel-card access-admin-card">
+        <div class="section-heading" style="margin-bottom: 12px;">
+          <div>
+            <h2>Registro de acessos</h2>
+            <p class="muted">
+              Este registro também é apenas deste navegador nesta versão.
+            </p>
+          </div>
+          <button id="clearAccessButton" class="button button-outline"
+                  type="button">Limpar registro</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>ID</th>
+                <th>Data e horário</th>
+              </tr>
+            </thead>
+            <tbody id="adminAccessLog"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>🇸🇪 SUÉCIA NC</span>
+      <span>Central de consulta </span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
